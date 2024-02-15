@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.table{
+  width: 100%;
+}
+
+.paginButton{
+  cursor: pointer;
+  margin: 2px;
+}
+
+th{
+  cursor: pointer;
+}

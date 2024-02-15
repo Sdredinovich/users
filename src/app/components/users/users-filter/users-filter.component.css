@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  padding: 10px;
+
+}
+
+.limit-input{
+  display: flex;
+  flex-direction: row;
+}
+.form-check-input{
+  cursor: pointer;
+}

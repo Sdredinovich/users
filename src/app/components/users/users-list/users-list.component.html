@@ -1,0 +1,65 @@
+<ng-container *ngrxLet="{
+    loadingStatus: loadingStatus$,
+    users: users$,
+    limit: limit$
+  } as vm">
+  <ng-container [ngSwitch]="vm.loadingStatus">
+    <app-users-filter [users]="vm.users" (setFilter)="changeFilter($event)"
+      (setLimit)="changeLimit($event)"></app-users-filter>
+
+    <ng-container *ngSwitchCase="'loaded'">
+      <div class="pagination">
+        <pagination-controls (pageChange)="page=$event"> </pagination-controls>
+      </div>
+      <table mat-table 
+        [dataSource]="vm.users | filterCompany : company | paginate: {itemsPerPage: vm.limit, currentPage: page, totalItems}"
+        class="mat-elevation-z8">
+        <ng-container matColumnDef="AVA">
+          <th s mat-header-cell *matHeaderCellDef> АВАТАР </th>
+          <td mat-cell *matCellDef="let user">
+            <img [routerLink]="['/users', user.id]" style="cursor: pointer" src="https://via.placeholder.com/60x60" />
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="FIO">
+          <th (click)="changeSort('name')" mat-header-cell *matHeaderCellDef> ФИО </th>
+          <td mat-cell *matCellDef="let user">
+            <p style="cursor: pointer" [routerLink]="['/users', user.id]">{{user.name}}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="LOGIN">
+          <th (click)="changeSort('username')" mat-header-cell *matHeaderCellDef> ЛОГИН </th>
+          <td mat-cell *matCellDef="let user"> {{user.username}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="EMAIL">
+          <th (click)="changeSort('email')" mat-header-cell *matHeaderCellDef> EMAIL </th>
+          <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ADDRESS">
+          <th (click)="changeSort('address')" mat-header-cell *matHeaderCellDef> Адрес </th>
+          <td mat-cell *matCellDef="let user"> {{user.address.city +' '+ user.address.street +' '+ user.address.street
+            }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </ng-container>
+    <ng-container *ngSwitchCase="'loading'">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </ng-container>
+
+
+
+    <!-- <div>
+
+      </div> -->
+  </ng-container>
+
+
+
+</ng-container>
